@@ -10,4 +10,9 @@ class Claim(Base):
     amount = Column(Float)
     date = Column(String)
     description = Column(String)
+<<<<<<< HEAD
     status = Column(String, default="pending")
+=======
+    status = Column(String, default="pending")
+    comment = Column(String, nullable=True)
+>>>>>>> 8489bb5 (Edited Submit Model)

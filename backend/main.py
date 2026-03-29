@@ -33,4 +33,12 @@ def create_claim(data: dict, db: Session = Depends(get_db)):
     db.add(claim)
     db.commit()
     db.refresh(claim)
+<<<<<<< HEAD
     return {"message": "Claim submitted successfully"}
+=======
+    return {"message": "Claim submitted successfully"}
+
+@app.get("/claims")
+def get_claims(db: Session = Depends(get_db)):
+    return db.query(Claim).all()
+>>>>>>> 8489bb5 (Edited Submit Model)
