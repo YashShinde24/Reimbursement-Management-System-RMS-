@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Submit Claim</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+    }
+
+    .container {
+      max-width: 375px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    textarea {
+      height: 80px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 15px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 10px;
+    }
+
+    #msg {
+      text-align: center;
+      margin-top: 10px;
+    }
+  </style>
+
+</head>
+
+<body>
+
+<div class="container">
+  <h2>Submit Claim</h2>
+
+  <div class="card">
+    <input id="title" placeholder="Title">
+
+```
+<select id="category">
+  <option value="">Select Category</option>
+  <option value="Food">Food</option>
+  <option value="Travel">Travel</option>
+  <option value="Office">Office</option>
+</select>
+
+<input id="amount" type="number" placeholder="Amount">
+<input id="date" type="date">
+<textarea id="description" placeholder="Description"></textarea>
+
+<button onclick="submitClaim()">Submit Claim</button>
+
+<p id="msg"></p>
+```
+
+  </div>
+</div>
+
+<script>
+async function submitClaim() {
+
+  const data = {
+    title: document.getElementById("title").value,
+    category: document.getElementById("category").value,
+    amount: Number(document.getElementById("amount").value),
+    date: document.getElementById("date").value,
+    description: document.getElementById("description").value
+  };
+
+  if (!data.title || !data.category || !data.amount) {
+    document.getElementById("msg").innerText = "⚠️ Fill all required fields";
+    return;
+  }
+
+  try {
+    const res = await fetch("http://127.0.0.1:8000/claims", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    });
+
+    if (res.ok) {
+      document.getElementById("msg").innerText = "✅ Submitted Successfully";
+    } else {
+      document.getElementById("msg").innerText = "❌ Failed";
+    }
+
+  } catch {
+    document.getElementById("msg").innerText = "⚠️ Server Error";
+  }
+}
+</script>
+
+</body>
+</html>
